@@ -4,15 +4,34 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
+using TestDotNet.Services;
+using Unity;
 
 namespace TestDotNet.Controllers
 {
+    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     public class ValuesController : ApiController
     {
+        [Dependency]
+        public IRozTestService RozTestService { get; set; }
+
         // GET api/values
-        public IEnumerable<string> Get()
+        public IHttpActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                var roz = RozTestService.GetAll();
+                if (roz == null)
+                    return NotFound();
+                
+                return Ok(roz);
+            }
+            catch (Exception ex)
+            {
+                // Log it somewhere
+                return InternalServerError(ex);
+            }
         }
 
         // GET api/values/5

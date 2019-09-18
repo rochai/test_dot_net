@@ -1,0 +1,21 @@
+<h2>Landing Page</h2>
+<p>Users</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{user.id}}</td>
+      <td>{{user.first_name}}</td>
+      <td>{{user.last_name}}</td>
+      <td><button  (click)="onClick()">View</button></td>
+    </tr>
+  </tbody>
+</table>

@@ -1,4 +1,7 @@
+using DBProject;
+using DBProject.DAL;
 using System.Web.Http;
+using TestDotNet.Services;
 using Unity;
 using Unity.WebApi;
 
@@ -9,12 +12,10 @@ namespace TestDotNet
         public static void RegisterComponents()
         {
 			var container = new UnityContainer();
-            
-            // register all your components with the container here
-            // it is NOT necessary to register your controllers
-            
-            // e.g. container.RegisterType<ITestService, TestService>();
-            
+
+            container.RegisterType<IUnitOfWork<RozTestEntities>, UnitOfWork<RozTestEntities>>();
+            container.RegisterType<IRozTestService, RozTestService>();
+
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }
     }
